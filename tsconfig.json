@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/about/page.jsx", "src/app/checkout/page.jsx", "src/app/contact/page.jsx", "src/app/hoodies/page.jsx", "src/app/login/page.jsx", "src/app/watches/page.jsx", "src/app/order/page.jsx", "src/app/product/[slug]/page.jsx", "src/app/signup/page.jsx", "src/app/tshirts/page.jsx", "src/app/layout.tsx", "src/components/CartProvider.js", "src/app/forgot.js/page.jsx", "src/app/page.jsx"],
   "exclude": ["node_modules"]
 }

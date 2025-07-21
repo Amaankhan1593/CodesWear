@@ -1,0 +1,143 @@
+// src/app/tshirts/page.jsx
+import Link from "next/link";
+import Product from "@/models/Product";
+import mongoose from "mongoose";
+
+export default async function Page() {
+  // Connect to DB if not already connected
+  if (mongoose.connections[0].readyState !== 1) {
+    await mongoose.connect(process.env.MONGO_URI);
+  }
+
+  // Fetch all tshirt products
+  let products = await Product.find({ category: 'tshirts' }).lean();
+
+  // Combine all colors & sizes (ignore titles)
+  let combinedTshirt = {
+    colors: [],
+    sizes: [],
+    items: products
+  };
+
+  for (let item of products) {
+    if (item.availableQty > 0) {
+      if (!combinedTshirt.colors.includes(item.color)) {
+        combinedTshirt.colors.push(item.color);
+      }
+      if (!combinedTshirt.sizes.includes(item.size)) {
+        combinedTshirt.sizes.push(item.size);
+      }
+    }
+  }
+
+  return (
+    <div>
+      <section className="text-gray-600 body-font">
+        <div className="container px-5 py-24 mx-auto">
+          <div className="flex flex-wrap justify-center">
+            {combinedTshirt.items.map((product) => (
+              <Link
+                key={product._id}
+                href={`/product/${product.slug}`}
+                className="lg:w-1/4 md:w-1/2 p-4 w-full shadow-lg"
+              >
+                <div className="block relative rounded overflow-hidden">
+                  <img
+                    alt={product.title}
+                    className="m-auto h-[30vh] md:h-[46vh] block"
+                    src={product.img}
+                  />
+                </div>
+                <div className="mt-4 text-center md:text-left">
+                  <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
+                    {product.category}
+                  </h3>
+                  <h2 className="text-gray-900 title-font text-lg font-medium">
+                    {product.title}
+                  </h2>
+                  <p className="mt-1">Rs{product.price}</p>
+
+                  {/* ✅ Inside card: show combined sizes */}
+                 <div className="mt-1 flex flex-wrap justify-center md:justify-start gap-1">
+                    {combinedTshirt.sizes.map((size) => (
+                      <span
+                        key={size}
+                        className="border border-gray-400 px-2 py-0.5 rounded text-xs font-medium"
+                      >
+                        {size}
+                      </span>
+                    ))}
+                  </div>
+
+
+                  {/* ✅ Inside card: show color dots */}
+                  <div className="mt-1 flex justify-center md:justify-start">
+                    {combinedTshirt.colors.map((col) => (
+                      <button
+                        key={col}
+                        className="border-2 border-gray-300 ml-1 rounded-full w-6 h-6 focus:outline-none"
+                        style={{ backgroundColor: col }}
+                      ></button>
+                    ))}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+
+
+// // src/app/tshirts/page.jsx
+// import Link from "next/link";
+// import Product from "@/models/Product";
+// import mongoose from "mongoose";
+
+// export default async function Page() {
+//   // connect to DB if not already connected
+//   if (mongoose.connections[0].readyState !== 1) {
+//     await mongoose.connect(process.env.MONGO_URI);
+//   }
+
+//   let products = await Product.find({category: 'tshirts'}).lean();
+
+//   return (
+//     <div>
+//       <section className="text-gray-600 body-font">
+//         <div className="container px-5 py-24 mx-auto">
+//           <div className="flex flex-wrap justify-center">
+//             {products.map((product) => (
+//               <Link
+//                 key={product._id}
+//                 href={`/product/${product.slug}`}
+//                 className="lg:w-1/4 md:w-1/2 p-4 w-full shadow-lg"
+//               >
+//                 <div className="block relative rounded overflow-hidden">
+//                   <img
+//                     alt={product.title}
+//                     className="m-auto h-[30vh] md:h-[46vh] block"
+//                     src={product.img}
+//                   />
+//                 </div>
+//                 <div className="mt-4 text-center md:text-left">
+//                   <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
+//                     {product.category}
+//                   </h3>
+//                   <h2 className="text-gray-900 title-font text-lg font-medium">
+//                     {product.title}
+//                   </h2>
+//                   <p className="mt-1">Rs{product.price}</p>
+//                   <p className="mt-1">S, M, L, XL, XXL</p>
+//                 </div>
+//               </Link>
+//             ))}
+//           </div>
+//         </div>
+//       </section>
+//     </div>
+//   );
+// }
