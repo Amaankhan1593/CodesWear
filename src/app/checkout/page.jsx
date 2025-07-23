@@ -100,28 +100,28 @@
 // export default Checkout;
 'use client';
 import React from 'react';
-import { FaCirclePlus, FaCircleMinus } from 'react-icons/fa6';
-import { IoBagCheckSharp } from 'react-icons/io5';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+// import { FaCirclePlus, FaCircleMinus } from 'react-icons/fa6';
+// import { IoBagCheckSharp } from 'react-icons/io5';
+// import Link from 'next/link';
+// import { useRouter } from 'next/navigation';
 
 const Checkout = () => {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const handleCheckout = async () => {
-    const res = await fetch('/api/checkout-session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cart, subTotal }),
-    });
+  // const handleCheckout = async () => {
+  //   const res = await fetch('/api/checkout-session', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({ cart, subTotal }),
+  //   });
 
-    const data = await res.json();
-    if (data.url) {
-      router.push(data.url);
-    } else {
-      alert('Payment error. Please try again.');
-    }
-  };
+  //   const data = await res.json();
+  //   if (data.url) {
+  //     router.push(data.url);
+  //   } else {
+  //     alert('Payment error. Please try again.');
+  //   }
+  // };
 
   return (
     <div className='container m-auto'>
@@ -167,7 +167,7 @@ const Checkout = () => {
       </div>
 
       <h2 className='font-bold text-xl mt-8 mb-4'>2. Review Cart Items</h2>
-      <div className="sideCart bg-pink-200 p-6 rounded-lg shadow-md">
+      {/* <div className="sideCart bg-pink-200 p-6 rounded-lg shadow-md">
         <h2 className="font-bold text-xl text-center mb-4">Shopping Cart</h2>
 
         <ol className="list-decimal font-semibold">
@@ -211,7 +211,7 @@ const Checkout = () => {
             Clear Cart
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
