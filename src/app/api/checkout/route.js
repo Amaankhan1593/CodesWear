@@ -4,7 +4,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
   try {
-    const { cart, subTotal } = await req.json();
+    const { cart} = await req.json();
 
     const line_items = Object.keys(cart).map((key) => {
       const item = cart[key];
