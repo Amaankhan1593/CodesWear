@@ -7,7 +7,6 @@ interface Props {
 }
 
 const Providers: React.FC<Props> = ({ children }) => {
-  const [cart, setCart] = useState({});
 
   return <div>
     {children}

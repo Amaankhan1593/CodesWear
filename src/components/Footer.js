@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -9,8 +10,14 @@ const Footer = () => {
       <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
         <Link href={"/"}>
         <span className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-         <img src="/logo.png" alt="" />
-        </span>
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={200}
+            height={30}
+            className="w-full h-auto"
+          />      
+            </span>
         </Link>
         <p className="mt-2 text-sm text-gray-500 px-4">Wear the &lt;Code/&gt;</p>
         <p className="text-sm text-gray-500 px-4">Premium coding tshirts, hoodies, perfumes and watches</p>

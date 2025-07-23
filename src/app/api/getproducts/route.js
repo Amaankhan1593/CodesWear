@@ -1,7 +1,7 @@
 import Product from "../../../models/Product";
 import connectDb from "../../../middleware/mongoose"; // ✅ If it's a default export, no {}
 
-export async function GET(request) {
+export async function GET() {
   try {
     await connectDb();
     const products = await Product.find();
