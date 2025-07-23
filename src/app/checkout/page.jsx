@@ -105,7 +105,7 @@ import { IoBagCheckSharp } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-const Checkout = ({ cart = {}, clearCart = () => {}, addToCart = () => {}, removeFromCart = () => {}, subTotal = 0 }) => {
+const Checkout = () => {
   const router = useRouter();
 
   const handleCheckout = async () => {
