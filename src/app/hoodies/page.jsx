@@ -102,7 +102,7 @@
 // app/hoodies/page.js
 import Link from "next/link";
 import Product from "@/models/Product";
-import connectDB from "@/lib/connectDB";
+import connectDB from "../../../lib/connectDB";
 
 export default async function Page() {
   // Connect to MongoDB
