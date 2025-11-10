@@ -94,6 +94,8 @@
 
 
 // app/watches/page.jsx
+export const dynamic = "force-dynamic"; // <- Add this line
+
 import Link from "next/link";
 import Product from "@/models/Product";
 import connectDB from "../../../lib/connectDB";
@@ -185,3 +187,4 @@ export default async function WatchesPage() {
     </div>
   );
 }
+
