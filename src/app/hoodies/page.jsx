@@ -1,12 +1,11 @@
+// // app/hoodies/page.js
 // import Link from "next/link";
 // import Product from "@/models/Product";
-// import mongoose from "mongoose";
+// import connectDB from "../../../lib/connectDB";
 
 // export default async function Page() {
-//   // Connect to DB if not already connected
-//   if (mongoose.connections[0].readyState !== 1) {
-//     await mongoose.connect(process.env.MONGO_URI);
-//   }
+//   // Connect to MongoDB
+//   await connectDB();
 
 //   // Fetch all hoodie products
 //   let products = await Product.find({ category: "hoodies" }).lean();
@@ -48,12 +47,12 @@
 //               <Link
 //                 key={product.slug}
 //                 href={`/product/${product.slug}`}
-//                 className="lg:w-1/4 md:w-1/2 p-4 w-full shadow-lg"
+//                 className="lg:w-1/4 md:w-1/2 p-4 w-full shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded"
 //               >
 //                 <div className="block relative rounded overflow-hidden">
 //                   <img
 //                     alt={product.title}
-//                     className="m-auto h-[30vh] md:h-[46vh] block"
+//                     className="m-auto h-[30vh] md:h-[46vh] object-cover block"
 //                     src={product.img}
 //                   />
 //                 </div>
@@ -66,7 +65,7 @@
 //                   </h2>
 //                   <p className="mt-1">Rs {product.price}</p>
 
-//                   {/* Show all sizes available for this title */}
+//                   {/* Sizes */}
 //                   <div className="mt-1 flex flex-wrap justify-center md:justify-start gap-1">
 //                     {product.sizes.map((size) => (
 //                       <span
@@ -78,7 +77,7 @@
 //                     ))}
 //                   </div>
 
-//                   {/* Show all colors available */}
+//                   {/* Colors */}
 //                   <div className="mt-1 flex justify-center md:justify-start">
 //                     {product.colors.map((col) => (
 //                       <button
@@ -99,34 +98,28 @@
 // }
 
 
-// app/hoodies/page.js
 import Link from "next/link";
 import Product from "@/models/Product";
-import connectDB from "../../../lib/connectDB";
+import connectDB from "@/lib/connectDB";
 
-export default async function Page() {
-  // Connect to MongoDB
+export const revalidate = 0; // always render on request (no static build)
+
+export default async function HoodiesPage() {
   await connectDB();
 
-  // Fetch all hoodie products
-  let products = await Product.find({ category: "hoodies" }).lean();
+  const products = await Product.find({ category: "hoodies" }).lean();
 
-  // Group products by title
-  let groupedProducts = {};
+  const groupedProducts = {};
 
-  for (let item of products) {
-    if (item.title in groupedProducts) {
-      // Add size if not already present and qty > 0
+  products.forEach((item) => {
+    if (groupedProducts[item.title]) {
       if (item.availableQty > 0 && !groupedProducts[item.title].sizes.includes(item.size)) {
         groupedProducts[item.title].sizes.push(item.size);
       }
-
-      // Add color if not already present
       if (!groupedProducts[item.title].colors.includes(item.color)) {
         groupedProducts[item.title].colors.push(item.color);
       }
     } else {
-      // First time seeing this product title
       groupedProducts[item.title] = {
         title: item.title,
         slug: item.slug,
@@ -137,7 +130,7 @@ export default async function Page() {
         colors: [item.color],
       };
     }
-  }
+  });
 
   return (
     <div>
