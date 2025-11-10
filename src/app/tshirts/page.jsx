@@ -90,6 +90,8 @@
 //   );
 // }
 // src/app/tshirts/page.jsx
+export const dynamic = "force-dynamic"; // disables prerendering
+
 import Link from "next/link";
 import Product from "@/models/Product";
 import mongoose from "mongoose";
