@@ -95,7 +95,7 @@
 
 import Link from "next/link";
 import Product from "@/models/Product";
-import connectDB from "@/lib/connectDB";
+import connectDB from "../../../lib/connectDB";
 
 // Disable static generation
 export const revalidate = 0;

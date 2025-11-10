@@ -100,7 +100,7 @@
 
 import Link from "next/link";
 import Product from "@/models/Product";
-import connectDB from "@/lib/connectDB";
+import connectDB from "../../../lib/connectDB";
 
 export const revalidate = 0; // always render on request (no static build)
 
